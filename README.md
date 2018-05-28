@@ -14,6 +14,7 @@ $ npm run dev
 
 ## 主要特性
 
+* 移除无效依赖
 * 集中配置页面信息
 * 合理化目录结构
 * 支持新增页面热更新
@@ -24,5 +25,3 @@ $ npm run dev
 
 * [quickstart](http://mpvue.com/mpvue/quickstart)
 * [mpvue-entry](https://github.com/F-loat/mpvue-entry)
-
-> bug 或者交流建议等请反馈到 [mpvue/issues](https://github.com/Meituan-Dianping/mpvue/issues)

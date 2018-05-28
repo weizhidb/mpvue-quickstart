@@ -6,6 +6,7 @@ export default {
     logs.unshift(Date.now()){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     wx.setStorageSync('logs', logs){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
+    // eslint-disable-next-line
     console.log('app created and cache logs by setStorageSync'){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
   }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
 }{{#if_eq lintConfig "airbnb"}};{{/if_eq}}

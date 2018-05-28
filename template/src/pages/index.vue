@@ -57,6 +57,7 @@ export default {
       }){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     },
     clickHandle{{#unless_eq lintConfig "airbnb"}} {{/unless_eq}}(msg, ev) {
+      // eslint-disable-next-line
       console.log('clickHandle:', msg, ev){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
     }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
   },

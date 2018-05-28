@@ -1,19 +1,17 @@
-var path = require('path')
-var fs = require('fs')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
-var MpvuePlugin = require('webpack-mpvue-asset-plugin')
-var MpvueEntry = require('mpvue-entry')
+const path = require('path')
+const fs = require('fs')
+const MpvuePlugin = require('webpack-mpvue-asset-plugin')
+const MpvueEntry = require('mpvue-entry')
+const utils = require('./utils')
+const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  // 如果要自定义生成的 dist 目录里面的文件路径，
-  // 可以将 entry 写成 {'toPath': 'fromPath'} 的形式，
-  // toPath 为相对于 dist 的路径, 例：index/demo，则生成的文件地址为 dist/index/demo.js
+  // 通过 src/pages.js 来配置要打包的页面，
   entry: MpvueEntry.getEntry('src/pages.js'),
   target: require('mpvue-webpack-target'),
   output: {
@@ -26,9 +24,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      {{#if_eq build "standalone"}}
-      // 'vue$': 'vue/dist/vue.esm.js',
-      {{/if_eq}}
       'vue': 'mpvue',
       '@': resolve('src')
     },
@@ -43,7 +38,7 @@ module.exports = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        include: resolve('src'),
         options: {
           formatter: require('eslint-friendly-formatter')
         }
@@ -56,7 +51,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [resolve('src'), resolve('test')],
+        include: resolve('src'),
         use: [
           'babel-loader',
           {
@@ -71,7 +66,6 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
           name: utils.assetsPath('img/[name].[ext]')
         }
       },
@@ -87,7 +81,6 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
       }
