@@ -16,10 +16,11 @@ module.exports = {
   target: require('mpvue-webpack-target'),
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
+    filename: utils.assetsPath('../[name]/js/main.js'),
+    chunkFilename: utils.assetsPath('../[id]/js/main.js'),
     publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
