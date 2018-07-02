@@ -14,12 +14,9 @@ $ npm run dev
 
 ## 主要特性
 
-* 移除无效依赖
-* 集中配置页面信息
-* 合理化目录结构
-* 支持新增页面热更新
-* 自动清理失效文件
-* 配置文件模块化
+* 移除 express 等无关依赖
+* 引入 mpvue-entry，集中配置页面信息
+* 优化分包效果（参考 [@auven](https://github.com/auven) 在 [Meituan-Dianping/mpvue#590](https://github.com/Meituan-Dianping/mpvue/issues/590) 中的分享）
 
 ## 详细文档请查阅
 
