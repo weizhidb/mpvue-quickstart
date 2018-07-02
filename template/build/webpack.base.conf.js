@@ -47,7 +47,7 @@ module.exports = {
       {{/lint}}
       {
         test: /\.vue$/,
-        loader: 'mpvue-loader',
+        loader: '@f-loat/mpvue-loader',
         options: vueLoaderConfig
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
         use: [
           'babel-loader',
           {
-            loader: 'mpvue-loader',
+            loader: '@f-loat/mpvue-loader',
             options: {
               checkMPEntry: true
             }
