@@ -1,5 +1,5 @@
 const path = require('path')
-const fs = require('fs')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpvuePlugin = require('webpack-mpvue-asset-plugin')
 const MpvueEntry = require('mpvue-entry')
 const utils = require('./utils')
@@ -16,11 +16,10 @@ module.exports = {
   target: require('mpvue-webpack-target'),
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('../[name]/js/main.js'),
-    chunkFilename: utils.assetsPath('../[id]/js/main.js'),
+    filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
-        ? config.build.assetsPublicPath
-        : config.dev.assetsPublicPath
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -47,7 +46,7 @@ module.exports = {
       {{/lint}}
       {
         test: /\.vue$/,
-        loader: '@f-loat/mpvue-loader',
+        loader: 'mpvue-loader',
         options: vueLoaderConfig
       },
       {
@@ -56,7 +55,7 @@ module.exports = {
         use: [
           'babel-loader',
           {
-            loader: '@f-loat/mpvue-loader',
+            loader: 'mpvue-loader',
             options: {
               checkMPEntry: true
             }
@@ -89,6 +88,17 @@ module.exports = {
   },
   plugins: [
     new MpvuePlugin(),
-    new MpvueEntry()
+    new MpvueEntry(),
+    new CopyWebpackPlugin([{
+      from: resolve('./src/main.json'),
+      to: 'app.json'
+    }]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist/static'),
+        ignore: ['.*']
+      }
+    ])
   ]
 }

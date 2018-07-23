@@ -6,9 +6,7 @@ const config = require('../config')
 const baseWebpackConfig = require('./webpack.base.conf')
 
 // copy from ./webpack.prod.conf.js
-const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
@@ -21,6 +19,13 @@ module.exports = merge(baseWebpackConfig, {
   // cheap-module-eval-source-map is faster for development
   // devtool: '#cheap-module-eval-source-map',
   devtool: '#source-map',
+  output: {
+    path: config.build.assetsRoot,
+    // filename: utils.assetsPath('[name].[chunkhash].js'),
+    // chunkFilename: utils.assetsPath('[id].[chunkhash].js')
+    filename: utils.assetsPath('[name].js'),
+    chunkFilename: utils.assetsPath('[id].js')
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
@@ -28,7 +33,8 @@ module.exports = merge(baseWebpackConfig, {
     // copy from ./webpack.prod.conf.js
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('../[name]/css/main.wxss')
+      // filename: utils.assetsPath('[name].[contenthash].css')
+      filename: utils.assetsPath('[name].wxss')
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -38,7 +44,7 @@ module.exports = merge(baseWebpackConfig, {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      name: 'common/vendor',
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -49,17 +55,12 @@ module.exports = merge(baseWebpackConfig, {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
+      name: 'common/manifest',
+      chunks: ['common/vendor']
     }),
-    // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
-    ]),
+
+    // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
+    // new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new FriendlyErrorsPlugin()
   ]

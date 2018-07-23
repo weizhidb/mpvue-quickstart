@@ -12,16 +12,3 @@ App.mpType = 'app'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 
 const app = new Vue(App){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
 app.$mount(){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-
-export default {
-  // 这个字段走 app.json
-  config: {
-    pages: [],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-    }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-  }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-}{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
