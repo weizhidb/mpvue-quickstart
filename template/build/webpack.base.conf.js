@@ -10,16 +10,19 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-function getEntry (rootSrc) {
-  var map = {};
-  glob.sync(rootSrc + '/pages/**/main.js')
-  .forEach(file => {
-    var key = relative(rootSrc, file).replace('.js', '');
-    map[key] = file;
-  })
-   return map;
-}
-
+module.exports = {
+  // 通过 src/pages.js 来配置要打包的页面，
+  entry: MpvueEntry.getEntry('src/pages.js'),
+  target: require('mpvue-webpack-target'),
+  output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath('../[name]/js/main.js'),
+    chunkFilename: utils.assetsPath('../[id]/js/main.js'),
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
+  },
+  resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue': 'mpvue',
@@ -87,10 +90,6 @@ function getEntry (rootSrc) {
   plugins: [
     new MpvuePlugin(),
     new MpvueEntry(),
-    new CopyWebpackPlugin([{
-      from: resolve('./src/main.json'),
-      to: 'app.json'
-    }]),
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
