@@ -17,7 +17,7 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "mpvue-entry": "^1.4.0",
-    "mpvue-loader": "^1.1.1-rc.2",
+    "mpvue-loader": "^1.1.2",
     "mpvue-webpack-target": "^1.0.0",
     "mpvue-template-compiler": "^1.0.0",
     "postcss-loader": "^2.1.0",

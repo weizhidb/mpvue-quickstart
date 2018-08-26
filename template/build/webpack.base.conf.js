@@ -10,18 +10,16 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-module.exports = {
-  // 通过 src/pages.js 来配置要打包的页面，
-  entry: MpvueEntry.getEntry('src/pages.js'),
-  target: require('mpvue-webpack-target'),
-  output: {
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
-  },
-  resolve: {
+function getEntry (rootSrc) {
+  var map = {};
+  glob.sync(rootSrc + '/pages/**/main.js')
+  .forEach(file => {
+    var key = relative(rootSrc, file).replace('.js', '');
+    map[key] = file;
+  })
+   return map;
+}
+
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue': 'mpvue',
