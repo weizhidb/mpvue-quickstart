@@ -1,9 +1,10 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const utils = require('./utils')
+const webpack = require('webpack')
 const config = require('../config')
+const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
+// var HtmlWebpackPlugin = require('html-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 // copy from ./webpack.prod.conf.js
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -21,8 +22,6 @@ module.exports = merge(baseWebpackConfig, {
   devtool: '#source-map',
   output: {
     path: config.build.assetsRoot,
-    // filename: utils.assetsPath('[name].[chunkhash].js'),
-    // chunkFilename: utils.assetsPath('[id].[chunkhash].js')
     filename: utils.assetsPath('[name].js'),
     chunkFilename: utils.assetsPath('[id].js')
   },
@@ -33,7 +32,6 @@ module.exports = merge(baseWebpackConfig, {
     // copy from ./webpack.prod.conf.js
     // extract css into its own file
     new ExtractTextPlugin({
-      // filename: utils.assetsPath('[name].[contenthash].css')
       filename: utils.assetsPath('[name].wxss')
     }),
     // Compress extracted CSS. We are using this plugin so that possible

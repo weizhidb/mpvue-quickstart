@@ -1,7 +1,7 @@
 const path = require('path')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpvuePlugin = require('webpack-mpvue-asset-plugin')
 const MpvueEntry = require('mpvue-entry')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
@@ -10,23 +10,28 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const entry = MpvueEntry.getEntry({
+  pages: './src/pages.js',
+  app: './src/app.json',
+})
+
 module.exports = {
-  // 通过 src/pages.js 来配置要打包的页面，
-  entry: MpvueEntry.getEntry('src/pages.js'),
+  entry,
   target: require('mpvue-webpack-target'),
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('../[name]/js/main.js'),
-    chunkFilename: utils.assetsPath('../[id]/js/main.js'),
+    filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue': 'mpvue',
-      '@': resolve('src')
+      '@': resolve('src'),
+      vue: 'mpvue',
+      flyio: 'flyio/dist/npm/wx',
+      wx: resolve('src/utils/wx')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],
@@ -34,7 +39,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {{#lint}}
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
@@ -44,7 +48,6 @@ module.exports = {
           formatter: require('eslint-friendly-formatter')
         }
       },
-      {{/lint}}
       {
         test: /\.vue$/,
         loader: 'mpvue-loader',
@@ -75,7 +78,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('media/[name].[ext]')
+          name: utils.assetsPath('media/[name]].[ext]')
         }
       },
       {
