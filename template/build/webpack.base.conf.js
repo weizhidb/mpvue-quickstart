@@ -1,18 +1,39 @@
-const path = require('path')
-const MpvuePlugin = require('webpack-mpvue-asset-plugin')
-const MpvueEntry = require('mpvue-entry')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const utils = require('./utils')
-const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
+var path = require('path')
+var fs = require('fs')
+var utils = require('./utils')
+var config = require('../config')
+var vueLoaderConfig = require('./vue-loader.conf')
+var MpvuePlugin = require('webpack-mpvue-asset-plugin')
+var glob = require('glob')
+var config_program = require('../src/utils/config')
+
+var genEntry = require('mpvue-entry')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const entry = MpvueEntry.getEntry('./src/pages.js')
+// function getEntry (rootSrc, pattern) {
+//   var files = glob.sync(path.resolve(rootSrc, pattern))
+//   return files.reduce((res, file) => {
+//     var info = path.parse(file)
+//     var key = info.dir.slice(rootSrc.length + 1) + '/' + info.name
+//     res[key] = path.resolve(file)
+//     return res
+//   }, {})
+// }
+//
+// const appEntry = { app: resolve('./src/main.js') }
+// const pagesEntry = getEntry(resolve('./src'), 'pages/**/main.js')
+// const entry = Object.assign({}, appEntry, pagesEntry)
+
+
+const entry = genEntry(config_program.router_path)
 
 module.exports = {
+  // 如果要自定义生成的 dist 目录里面的文件路径，
+  // 可以将 entry 写成 {'toPath': 'fromPath'} 的形式，
+  // toPath 为相对于 dist 的路径, 例：home/demo，则生成的文件地址为 dist/home/demo.js
   entry,
   target: require('mpvue-webpack-target'),
   output: {
@@ -25,24 +46,24 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      'vue': 'mpvue',
       '@': resolve('src'),
-      vue: 'mpvue'
+      flyio: 'flyio/dist/npm/wx',
+      wx: resolve('src/utils/wx')
     },
-    symlinks: false,
-    aliasFields: ['mpvue', 'weapp', 'browser'],
-    mainFields: ['browser', 'module', 'main']
+    symlinks: false
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: resolve('src'),
-        options: {
-          formatter: require('eslint-friendly-formatter')
-        }
-      },
+      // {
+      //   test: /\.(js|vue)$/,
+      //   loader: 'eslint-loader',
+      //   enforce: 'pre',
+      //   include: [resolve('src'), resolve('test')],
+      //   options: {
+      //     formatter: require('eslint-friendly-formatter')
+      //   }
+      // },
       {
         test: /\.vue$/,
         loader: 'mpvue-loader',
@@ -50,7 +71,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: resolve('src'),
+        include: [resolve('src'), resolve('test'), resolve('node_modules/mpvue-entry')],
         use: [
           'babel-loader',
           {
@@ -65,6 +86,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          limit: 10000,
           name: utils.assetsPath('img/[name].[ext]')
         }
       },
@@ -73,27 +95,20 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('media/[name].[ext]')
+          name: utils.assetsPath('media/[name]].[ext]')
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          limit: 10000,
           name: utils.assetsPath('fonts/[name].[ext]')
         }
       }
     ]
   },
   plugins: [
-    new MpvuePlugin(),
-    new MpvueEntry(),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: path.resolve(__dirname, '../dist/static'),
-        ignore: ['.*']
-      }
-    ])
+    new MpvuePlugin()
   ]
 }

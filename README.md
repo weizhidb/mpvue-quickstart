@@ -6,7 +6,7 @@
 
 ``` bash
 $ npm install -g vue-cli
-$ vue init F-loat/mpvue-quickstart my-project
+$ vue init weizhidb/mpvue-quickstart my-project
 $ cd my-project
 $ npm install
 $ npm run dev
@@ -21,4 +21,4 @@ $ npm run dev
 ## 详细文档请查阅
 
 * [quickstart](http://mpvue.com/mpvue/quickstart)
-* [mpvue-entry](https://github.com/F-loat/mpvue-entry)
+* [mpvue-entry](https://github.com/weizhidb/mpvue-entry)
