@@ -34,13 +34,13 @@ export default {
             borderStyle: 'black',
             list: [
                 {
-                    pagePath: '/pages/home',
+                    pagePath: 'pages/home',
                     text: '首页',
                     iconPath: 'static/assets/shouye_unselected.png',
                     selectedIconPath: 'static/assets/shouye_selected.png'
                 },
                 {
-                    pagePath: '/pages/home',
+                    pagePath: 'pages/home',
                     text: '我的',
                     iconPath: 'static/assets/my_unselected.png',
                     selectedIconPath: 'static/assets/my_selected.png'
