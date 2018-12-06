@@ -6,7 +6,6 @@
 
 ``` bash
 $ npm install -g vue-cli
-$ vue init weizhidb/mpvue-quickstart my-project
 $ cd my-project
 $ npm install
 $ npm run dev
