@@ -17,7 +17,7 @@ module.exports = [
   // },
   {
     path: '/pages/home',
-    name: 'Index',
+    name: 'Home',
     config: {
       enablePullDownRefresh: false
     }

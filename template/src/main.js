@@ -1,15 +1,16 @@
 import Vue from 'vue'
-import store from '@/store'
+// import store from '@/store'
 import App from '@/App'
 import MpvueRouterPatch from 'mpvue-router-patch'
+import api from '@/utils/api'
 Vue.config.productionTip = false
 Vue.use(MpvueRouterPatch)
-
+Vue.prototype.$fd = api
 // import VueLazyLoad from 'vue-lazyload'
 // Vue.use(VueLazyLoad)
 
 const app = new Vue({
-    store,
+    // store,
     ...App
 })
 app.$mount()
@@ -23,7 +24,7 @@ export default {
             backgroundColor: '#fff',
             backgroundColorTop: '#ffffff',
             navigationBarBackgroundColor: '#fff',
-            navigationBarTitleText: '长垣县法院执行平台',
+            navigationBarTitleText: 'mpvue-quickstart',
             navigationBarBackgroundColor: '#fff',
             navigationBarTextStyle:'black'
         },
